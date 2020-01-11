@@ -47,7 +47,7 @@ void read_kbc(uint8_t *short_press, uint8_t *long_press, uint8_t big_incr) {
 		else if (cnt > MIN_CNT && cnt < MAX_CNT) {
 			(*short_press)++;
 			if(big_incr){
-				if(KEY_PRESS && (*short_press) == 1 || (*short_press) == 2 || (*short_press) == 3) (*short_press) += 10;
+				if(KEY_PRESS && (*short_press) >= 1 || (*short_press) <= 4) (*short_press) += 10;
 			}
 
 			reset_cnt();

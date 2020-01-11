@@ -20,8 +20,7 @@
 uint16_t zm = 0;
 
 volatile uint8_t timer, tim2, tim3;
-
-uint8_t menu_pos = 0;
+extern uint8_t menu_pos = 0;
 
 
 
@@ -45,7 +44,7 @@ int main(void){
 	while(1){
 		encoder();
 
-		if(!menu_pos  ) encoder_reset();
+		if(!menu_pos || menu_pos == 12 || menu_pos == 13) encoder_reset();
 		else menu_pos += enc_get();
 
 
@@ -57,8 +56,8 @@ int main(void){
 		else if(menu_pos != 12) read_kbc(&menu_pos, 0, 1);
 		else if(menu_pos == 12) read_kbc(0,0,0);
 
-//		lcd_locate(1,14);
-//		lcd_int(menu_pos);
+		lcd_locate(1,14);
+		lcd_int(menu_pos);
 
 	}
 }

@@ -17,8 +17,8 @@
 #define KEY_PRESS (!(KEY_PIN & KEY))
 #define KEY_NO_PRESS (KEY_PIN & KEY)
 
-#define MAX_CNT 1000
-#define MIN_CNT 180
+#define MAX_CNT 500
+#define MIN_CNT 120
 
 
 void init_kbc(void);

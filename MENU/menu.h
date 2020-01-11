@@ -19,11 +19,13 @@ typedef struct {
 	uint8_t KI;
 	uint8_t KD;
 	uint8_t KT;
-}pid_ust;
+}pid_ust_t;
 
 void menu_change(uint8_t pos);
 void start_display(uint16_t current_temp, uint16_t temp, uint8_t pwm);
 
-void test(void);
+void ust_func(void);
+void exit(void);
+void exit_info(void);
 
 #endif /* MENU_MENU_H_ */

@@ -9,19 +9,19 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "menu.h"
-//#include "../LCD/lcd44780.h"
 
-//extern volatile uint8_t tim1;
+uint8_t menu_pos;
 
 const menu_t menu[] = {
-		{"> Ustawie", "Informacje      ", 0 },
+		{"> Ustawienie PID  ", "Informacje      ", 0 },
 		{"Ustawienia PID  ", "> Informacje    ", 0},
 		{"> Wyjscie       ", "                ", 0}
 };
 
 const menu_t submenu[] ={
-		{" KP  KI  KD  KT ", 0, test }, //" 08  22  10  02 "
-		{"Jan Kowalski    ", "Warszawa 2020   ", 0},
+		{" KP  KI  KD  KT ", 0, ust_func },
+		{"Jan Kowalski    ", "Warszawa 2020   ", exit_info},
+		{0, 0, exit}
 };
 
 
@@ -36,7 +36,7 @@ void menu_change(uint8_t pos){
 	lcd_locate(1,0);
 	lcd_str(second_line_pointner);
 
-	if(pos > 10 && submenu[pos].callback) submenu[pos - 12].callback();
+	if(pos > 10 && submenu[pos - 12].callback) submenu[pos - 12].callback();
 }
 
 void start_display(uint16_t current_temp, uint16_t temp, uint8_t pwm){
@@ -56,15 +56,38 @@ void clear(void){
 	lcd_str("  ");
 }
 
-void test(void){
+void ust_func(void){
 	static uint8_t pos = 0;
+	static pid_ust_t pid_ust;
 	uint8_t blink_tab[4][4] = {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
 
 	clear();
 	read_kbc(&pos, 0, 0);
-	if(pos > 3) pos = 0;
-	lcd_blink_int(pos, 1, 1, blink_tab[0][pos], 15);
-	lcd_blink_int(12, 1, 5, blink_tab[1][pos], 15);
-	lcd_blink_int(21, 1, 9, blink_tab[2][pos], 15);
-	lcd_blink_int(17, 1, 13, blink_tab[3][pos], 15);
+
+	if(pos > 3) {
+		pos = 0;
+		menu_pos = 1;
+	}
+	lcd_blink_int(pid_ust.KP, 1, 1, blink_tab[0][pos], 15);
+	lcd_blink_int(pid_ust.KI, 1, 5, blink_tab[1][pos], 15);
+	lcd_blink_int(pid_ust.KD, 1, 9, blink_tab[2][pos], 15);
+	lcd_blink_int(pid_ust.KT, 1, 13, blink_tab[3][pos], 15);
+
+	encoder();
+
+	if(pos == 0) pid_ust.KP += enc_get();
+	if(pos == 1) pid_ust.KI += enc_get();
+	if(pos == 2) pid_ust.KD += enc_get();
+	if(pos == 3) pid_ust.KT += enc_get();
+}
+
+void exit(void){
+	menu_pos = 0;
+}
+
+void exit_info(void){
+	static uint8_t pos = 0;
+	read_kbc(&pos, 0);
+
+	if(pos > 0) menu_pos = 2;
 }
