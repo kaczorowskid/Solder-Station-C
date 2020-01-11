@@ -14,6 +14,13 @@ typedef struct {
 	void (*callback)(void);
 }menu_t;
 
+typedef struct {
+	uint8_t KP;
+	uint8_t KI;
+	uint8_t KD;
+	uint8_t KT;
+}pid_ust;
+
 void menu_change(uint8_t pos);
 void start_display(uint16_t current_temp, uint16_t temp, uint8_t pwm);
 

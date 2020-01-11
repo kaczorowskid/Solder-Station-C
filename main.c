@@ -45,7 +45,7 @@ int main(void){
 	while(1){
 		encoder();
 
-		if(!menu_pos) encoder_reset();
+		if(!menu_pos  ) encoder_reset();
 		else menu_pos += enc_get();
 
 
@@ -53,10 +53,12 @@ int main(void){
 
 		if(!menu_pos) start_display(321, 432, 0);
 
-		read_kbc(&menu_pos, &menu_pos);
+		if(!menu_pos) read_kbc(0, &menu_pos, 0);
+		else if(menu_pos != 12) read_kbc(&menu_pos, 0, 1);
+		else if(menu_pos == 12) read_kbc(0,0,0);
 
-		lcd_locate(1,14);
-		lcd_int(menu_pos);
+//		lcd_locate(1,14);
+//		lcd_int(menu_pos);
 
 	}
 }

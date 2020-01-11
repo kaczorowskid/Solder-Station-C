@@ -22,7 +22,7 @@ void reset_cnt(void){
 	if (KEY_NO_PRESS) cnt = 0;
 }
 
-void read_kbc(uint8_t *short_press, uint8_t *long_press) {
+void read_kbc(uint8_t *short_press, uint8_t *long_press, uint8_t big_incr) {
 	if (KEY_PRESS) {
 		cnt++;
 		if(cnt > MAX_CNT) flag = 1;
@@ -31,21 +31,25 @@ void read_kbc(uint8_t *short_press, uint8_t *long_press) {
 	if (KEY_NO_PRESS) flag = 1;
 
 
+//	lcd_locate(0,12);
+//	lcd_int(cnt);
+//	lcd_locate(1,12);
+//	lcd_int(flag);
 
-	lcd_locate(0, 10);
-	lcd_int(cnt);
-	lcd_locate(1, 10);
-	lcd_int(flag);
+
 
 	if (flag) {
 		if (cnt > MAX_CNT && cnt > MIN_CNT) {
-			(*long_press) += 10;
+			(*long_press) = 1;
 			reset_cnt();
 		}
 
 		else if (cnt > MIN_CNT && cnt < MAX_CNT) {
 			(*short_press)++;
-			if(KEY_PRESS && (*short_press) == 1 || (*short_press) == 2 || (*short_press) == 3) (*short_press) += 10;
+			if(big_incr){
+				if(KEY_PRESS && (*short_press) == 1 || (*short_press) == 2 || (*short_press) == 3) (*short_press) += 10;
+			}
+
 			reset_cnt();
 		}
 	}
