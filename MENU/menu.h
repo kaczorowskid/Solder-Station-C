@@ -21,10 +21,12 @@ typedef struct {
 	uint8_t KT;
 }pid_ust_t;
 
-void menu_change(uint8_t pos);
-void start_display(uint16_t current_temp, uint16_t temp, uint8_t pwm);
+extern pid_ust_t pid_ust;
 
-void ust_func(void);
+void menu_change(uint8_t pos);
+void start_display(uint16_t current_temp, uint16_t temp, uint8_t blink_flag, uint8_t pwm);
+
+void settings_func(void);
 void exit(void);
 void exit_info(void);
 

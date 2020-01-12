@@ -21,3 +21,11 @@ uint16_t adc_measure(uint8_t mux){
 
 	return ADCW;
 }
+
+uint16_t temp_measure(uint16_t temp){
+	static uint32_t result;
+
+
+
+	return result;
+}

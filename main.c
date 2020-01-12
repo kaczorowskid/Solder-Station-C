@@ -17,12 +17,12 @@
 #include "ADC/adc.h"
 
 
-uint16_t zm = 0;
+//uint16_t zm = 0;
 
 volatile uint8_t timer, tim2, tim3;
 extern uint8_t menu_pos = 0;
 
-
+pid_ust_t pid_ust;
 
 int main(void){
 	lcd_init();
@@ -50,14 +50,15 @@ int main(void){
 
 		menu_change(menu_pos);
 
-		if(!menu_pos) start_display(321, 432, 0);
+		if(!menu_pos) start_display(321, 432, 1, 0);
 
 		if(!menu_pos) read_kbc(0, &menu_pos, 0);
 		else if(menu_pos != 12) read_kbc(&menu_pos, 0, 1);
 		else if(menu_pos == 12) read_kbc(0,0,0);
 
-		lcd_locate(1,14);
-		lcd_int(menu_pos);
+//		lcd_locate(1,14);
+//		lcd_int(menu_pos);
+
 
 	}
 }

@@ -12,6 +12,8 @@
 
 uint8_t menu_pos;
 
+pid_ust_t pid_ust;
+
 const menu_t menu[] = {
 		{"> Ustawienie PID  ", "Informacje      ", 0 },
 		{"Ustawienia PID  ", "> Informacje    ", 0},
@@ -19,7 +21,7 @@ const menu_t menu[] = {
 };
 
 const menu_t submenu[] ={
-		{" KP  KI  KD  KT ", 0, ust_func },
+		{" KP  KI  KD  KT ", 0, settings_func },
 		{"Jan Kowalski    ", "Warszawa 2020   ", exit_info},
 		{0, 0, exit}
 };
@@ -39,10 +41,10 @@ void menu_change(uint8_t pos){
 	if(pos > 10 && submenu[pos - 12].callback) submenu[pos - 12].callback();
 }
 
-void start_display(uint16_t current_temp, uint16_t temp, uint8_t pwm){
+void start_display(uint16_t current_temp, uint16_t temp, uint8_t blink_flag, uint8_t pwm){
 	lcd_locate(0,0);
 	lcd_big_int(current_temp);
-//	lcd_blink_int(temp, 0, 13, 1, 15);
+	lcd_blink_int(temp, 0, 12, blink_flag, 15);
 }
 
 void clear(void){
@@ -56,9 +58,8 @@ void clear(void){
 	lcd_str("  ");
 }
 
-void ust_func(void){
+void settings_func(void){
 	static uint8_t pos = 0;
-	static pid_ust_t pid_ust;
 	uint8_t blink_tab[4][4] = {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}};
 
 	clear();
@@ -68,7 +69,16 @@ void ust_func(void){
 		pos = 0;
 		menu_pos = 1;
 	}
+	if(pid_ust.KP < 10){
+		lcd_locate(1,2);
+		lcd_char(' ');
+	}
 	lcd_blink_int(pid_ust.KP, 1, 1, blink_tab[0][pos], 15);
+
+	if(pid_ust.KI < 10){
+		lcd_locate(1,6);
+		lcd_char(' ');
+	}
 	lcd_blink_int(pid_ust.KI, 1, 5, blink_tab[1][pos], 15);
 	lcd_blink_int(pid_ust.KD, 1, 9, blink_tab[2][pos], 15);
 	lcd_blink_int(pid_ust.KT, 1, 13, blink_tab[3][pos], 15);

@@ -11,6 +11,6 @@
 
 void adc_init(void);
 uint16_t adc_measure(uint8_t mux);
-
+uint16_t temp_measure(uint16_t temp);
 
 #endif /* ADC_ADC_H_ */
