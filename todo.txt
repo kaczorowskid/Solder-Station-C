@@ -1,1 +1,0 @@
-bug: po zwiekszeniu menu_pos do 12 zmienna sie zeruje 
