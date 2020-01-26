@@ -18,11 +18,12 @@
 #define KEY_NO_PRESS (KEY_PIN & KEY)
 
 #define MAX_CNT 500
-#define MIN_CNT 120
+#define MIN_CNT 100
 
 
 void init_kbc(void);
 void read_kbc(uint8_t *short_press, uint8_t *long_press, uint8_t big_incr);
 void reset_cnt(void);
+void read_key(uint8_t *short_press);
 
 #endif /* KEY_KEY_H_ */

@@ -8,11 +8,10 @@
 #include <avr/io.h>
 
 #include "pid.h"
-#include "../LCD/lcd44780.h"
 
 uint16_t pid(uint16_t setpoint, uint16_t temperature, pid_t *pid_s)
 {
-	int16_t result;
+	int32_t result;
 
 	// calculate regulator error
 	pid_s->errors[pid_s->index & MASK] = setpoint - temperature;

@@ -7,9 +7,8 @@
 
 #include <avr/io.h>
 #include "key.h"
-#include "../LCD/lcd44780.h"
 
-uint32_t cnt = 0;
+uint16_t cnt = 0;
 uint8_t flag = 0;
 
 void init_kbc(void) {
@@ -30,14 +29,6 @@ void read_kbc(uint8_t *short_press, uint8_t *long_press, uint8_t big_incr) {
 	}
 	if (KEY_NO_PRESS) flag = 1;
 
-
-//	lcd_locate(0,12);
-//	lcd_int(cnt);
-//	lcd_locate(1,12);
-//	lcd_int(flag);
-
-
-
 	if (flag) {
 		if (cnt > MAX_CNT && cnt > MIN_CNT) {
 			(*long_press) = 1;
@@ -52,6 +43,17 @@ void read_kbc(uint8_t *short_press, uint8_t *long_press, uint8_t big_incr) {
 
 			reset_cnt();
 		}
+	}
+}
+
+void read_key(uint8_t *short_press){
+	static uint8_t cnt;
+
+	if(KEY_PRESS) cnt++;
+
+	if(cnt > MIN_CNT){
+		(*short_press)++;
+		cnt = 0;
 	}
 
 }

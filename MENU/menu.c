@@ -45,6 +45,10 @@ void start_display(uint16_t current_temp, uint16_t temp, uint8_t blink_flag, uin
 	lcd_locate(0,0);
 	lcd_big_int(current_temp);
 	lcd_blink_int(temp, 0, 12, blink_flag, 15);
+	lcd_locate(1, 12);
+	lcd_str("   ");
+	lcd_locate(1, 12);
+	lcd_int(pwm);
 }
 
 void clear(void){
