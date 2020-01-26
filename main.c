@@ -15,7 +15,7 @@
 #include "MENU/menu.h"
 #include "ADC/adc.h"
 #include "PID/pid.h"
-#include "MKUART/mkuart.h"
+
 
 volatile uint8_t timer, timer1;
 extern uint8_t menu_pos;
@@ -60,7 +60,7 @@ int main(void) {
 	DDRC |= (1 << PC5);
 	PORTC &= ~(1 << PC5);
 
-	USART_Init(__UBRR);
+
 
 	adc_init();
 	init_kbc();
