@@ -1,11 +1,3 @@
-/*
- * enc.c
- *
- *  Created on: 30.12.2019
- *      Author: Damian
- */
-
-
 #include <avr/io.h>
 #include "enc.h"
 volatile int8_t encoder_step=0, encoder_last;

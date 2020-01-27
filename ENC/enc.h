@@ -1,10 +1,3 @@
-/*
- * enc.h
- *
- *  Created on: 30.12.2019
- *      Author: Damian
- */
-
 #ifndef ENC_ENC_H_
 #define ENC_ENC_H_
 

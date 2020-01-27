@@ -1,10 +1,3 @@
-/*
- * pid.h
- *
- *  Created on: 06.01.2020
- *      Author: Damian
- */
-
 #ifndef PID_PID_H_
 #define PID_PID_H_
 
